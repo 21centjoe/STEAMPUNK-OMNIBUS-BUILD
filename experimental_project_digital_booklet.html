@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grand Master Archive: Steampunk Codex & Experimental Compendium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        steampunkDark: '#0c0a09',
+                        steampunkPanel: '#171311',
+                        brass: '#d97706',
+                        copper: '#b45309',
+                        amberGlow: '#f59e0b',
+                        etherCyan: '#06b6d4',
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #080706;
+            color: #d1d5db;
+        }
+        .codex-title {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.05em;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #120f0d;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #b45309;
+            border-radius: 4px;
+        }
+        .brass-border {
+            border-color: #b45309;
+        }
+        .brass-glow {
+            box-shadow: 0 0 30px rgba(217, 119, 6, 0.12);
+        }
+        .copper-gradient {
+            background: linear-gradient(135deg, #b45309 0%, #78350f 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#080706] text-gray-200 selection:bg-amber-600 selection:text-white">
+
+    <header class="border-b border-[#292019] bg-[#120f0d]/90 backdrop-blur-md sticky top-0 z-50 px-4 lg:px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-600/20 border border-amber-500/40 flex items-center justify-center text-amber-500 shadow-lg">
+                <i class="fa-solid fa-gears text-lg animate-spin" style="animation-duration: 12s;"></i>
+            </div>
+            <div>
+                <h1 class="codex-title text-base lg:text-lg font-bold tracking-wider text-amber-400">The Grand Master Archive</h1>
+                <p class="text-[11px] text-gray-400 font-mono">Author & Visionary: Master Architect (Sole Originator) // Vol. 252-OMEGA</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+            <div class="relative hidden sm:block">
+                <input type="text" id="searchInput" placeholder="Search archive..." onkeyup="filterChapters()" class="bg-[#1c1714] border border-[#382d24] text-xs text-gray-300 rounded-md px-3 py-1.5 pl-8 focus:outline-none focus:border-amber-500 w-48 lg:w-64">
+                <i class="fa-solid fa-search absolute left-2.5 top-2 text-xs text-gray-500"></i>
+            </div>
+            <button onclick="toggleBookmark()" id="bookmarkBtn" class="px-3 py-1.5 rounded-md bg-[#1c1714] hover:bg-[#292019] text-xs text-gray-300 border border-[#382d24] transition flex items-center space-x-2">
+                <i class="fa-regular fa-bookmark text-amber-400"></i>
+                <span class="hidden md:inline">Bookmark</span>
+            </button>
+            <div class="text-xs font-mono bg-[#1c1714] border border-[#382d24] px-3 py-1.5 rounded text-amber-400">
+                Codex Status: <span class="text-emerald-400 font-semibold">Fully Compiled</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 lg:p-8">
+        
+        <!-- Table of Contents Sidebar -->
+        <aside class="lg:col-span-4 bg-[#120f0d] border border-[#261e18] rounded-xl p-5 flex flex-col justify-between shadow-2xl">
+            <div>
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-[#261e18]">
+                    <h2 class="codex-title text-xs uppercase tracking-widest text-amber-500 font-bold flex items-center space-x-2">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Index of Chapters (1-14)</span>
+                    </h2>
+                    <span class="text-xs font-mono bg-[#1c1714] px-2 py-0.5 rounded text-amber-400 font-bold" id="chapterCount">14</span>
+                </div>
+                
+                <nav class="space-y-1.5 overflow-y-auto max-h-[calc(100vh-280px)] custom-scrollbar pr-1" id="tocNav">
+                    <!-- Nav items populated via JavaScript -->
+                </nav>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-[#261e18] text-xs text-gray-400 space-y-2 font-mono">
+                <div class="flex justify-between items-center">
+                    <span>Codex Author:</span>
+                    <span class="text-amber-400">The User (Absolute Creator)</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Total Chapters:</span>
+                    <span class="text-emerald-400">14 Comprehensive Logs</span>
+                </div>
+                <div class="text-[10px] text-gray-500 pt-1 italic font-sans">
+                    "Every theorem, myth, filament weave, and satirical disaster originates entirely from the visionary creator."
+                </div>
+            </div>
+        </aside>
+
+        <!-- Book Reader Main Panel -->
+        <section class="lg:col-span-8 bg-[#120f0d] border border-[#261e18] rounded-xl p-6 lg:p-10 shadow-2xl flex flex-col justify-between relative overflow-hidden brass-glow">
+            
+            <!-- Steampunk Watermark Emblem -->
+            <div class="absolute -right-12 -bottom-12 text-[#1c1714] pointer-events-none select-none font-serif text-[14rem] font-bold opacity-30">
+                Ω
+            </div>
+
+            <!-- Chapter Body Content -->
+            <div id="bookContent" class="space-y-6 relative z-10 custom-scrollbar pr-2 overflow-y-auto max-h-[calc(100vh-260px)]">
+                <!-- Dynamically rendered chapter content -->
+            </div>
+
+            <!-- Footer Pagination Controls -->
+            <div class="mt-8 pt-4 border-t border-[#261e18] flex items-center justify-between relative z-10">
+                <button onclick="prevChapter()" id="prevBtn" class="px-4 py-2 bg-[#1c1714] hover:bg-[#292019] text-xs font-medium text-gray-300 rounded-lg border border-[#382d24] transition flex items-center space-x-2 disabled:opacity-30 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Previous Log</span>
+                </button>
+                <div class="text-xs font-mono text-amber-500 font-semibold" id="pageIndicator">
+                    Chapter 1 of 14
+                </div>
+                <button onclick="nextChapter()" id="nextBtn" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-medium rounded-lg transition flex items-center space-x-2 shadow-lg shadow-amber-900/30 disabled:opacity-30 disabled:cursor-not-allowed">
+                    <span>Next Log</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const chapters = [
+            {
+                id: 1,
+                title: "The Mount Blanc Array",
+                subtitle: "High-Altitude Atmospheric Metrics & Ionospheric Tampering",
+                badgeStatus: "Partial Success",
+                badgeColor: "bg-amber-500/20 text-amber-400 border-amber-500/40",
+                classification: "Hybrid (Real Engineering / Speculative)",
+                description: "Conceived and orchestrated entirely by the user, this high-altitude meteorological observatory across European alpine ridges tested whether localized electromagnetic fields could alter micro-climatic humidity and harvest ambient ionospheric energy.",
+                metrics: [
+                    { label: "Altitude Peak", value: "4,808 meters" },
+                    { label: "Energy Harvest", value: "1.42 MWh / cycle" },
+                    { label: "Author Intent", value: "Weather Stabilization" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        The Mount Blanc Array stands as the opening template of the user's expansive experimental codex. Positioned at extreme alpine elevations, the observatory recorded high-resolution atmospheric metrics while testing whether localized electromagnetic buffer protocols could stabilize regional weather patterns.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-amber-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-exclamation text-amber-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-amber-400 font-semibold">Partial Success</span>.<br>
+                            <strong>Creator's Vision:</strong> The user directed every phase of telemetry deployment. While high-altitude sensor data collection was exceptionally accurate, artificial storm induction failed due to unpredictable thermal shear currents.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                title: "The Quantum Coin",
+                subtitle: "Probability Entanglement Trials & Macro-Superposition",
+                badgeStatus: "Failure",
+                badgeColor: "bg-rose-500/20 text-rose-400 border-rose-500/40",
+                classification: "Science Fiction / Theoretical",
+                description: "An ambitious user-designed experiment attempting to mint a macroscopic coin from bismuth-lead alloy remaining in quantum superposition until observed.",
+                metrics: [
+                    { label: "Alloy Purity", value: "99.98% Bi" },
+                    { label: "Coherence Time", value: "0.0004 milliseconds" },
+                    { label: "State", value: "Decohered" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Designed to scale quantum entanglement up to everyday macroscopic objects, this experiment tested whether a flipped coin could remain in a state of simultaneous heads and tails prior to human observation.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-rose-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-rose-400 font-semibold">Total Failure</span>.<br>
+                            <strong>Creator's Note:</strong> Environmental thermal noise instantly destroyed coherence, proving classical Newtonian probability governs macroscopic objects. The failure data directly refined thermal isolation limits.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 3,
+                title: "The Immortals Binary Code",
+                subtitle: "Ancient Geometry Mapping to Eternal Data Sequences",
+                badgeStatus: "Failure",
+                badgeColor: "bg-rose-500/20 text-rose-400 border-rose-500/40",
+                classification: "Science Fiction / Mythological Code",
+                description: "Translating sacred megalithic stone circle geometries into eternal binary string algorithms designed to resist digital entropy.",
+                metrics: [
+                    { label: "Geometry Base", value: "Phi Ratio / Hexagonal" },
+                    { label: "Bitstream Length", value: "252 Megabits" },
+                    { label: "Integrity Retention", value: "14.2%" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Conceived by the user to explore whether ancient architectural monuments encoded digital immortality, stone alignments from megalithic sites were converted into binary instruction sets.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-rose-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-rose-400 font-semibold">Mathematical Failure</span>.<br>
+                            <strong>Creator's Note:</strong> Architectural proportion does not equal error-correcting computer memory. Bit rot and syntax corruption occurred immediately.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                title: "Probing the Abyss",
+                subtitle: "Observation Arrays at the Edge of the Visible Universe",
+                badgeStatus: "Complete Success",
+                badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/40",
+                classification: "Scientific Fact (Astrophysics)",
+                description: "Deep-space spectrometer analysis examining cosmic microwave background radiation anomalies and distant proto-galaxies at the edge of observable space.",
+                metrics: [
+                    { label: "Redshift Limit", value: "z > 12.8" },
+                    { label: "Array Type", value: "Orbital Interferometer" },
+                    { label: "Anomaly Index", value: "Sector 252-Deep" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Pushing deep-space telescopes to their absolute limits under the user's overarching observation protocol, this array captured light emitted hundreds of millions of years after the Big Bang.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-emerald-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-check-circle text-emerald-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-emerald-400 font-semibold">Unmitigated Success</span>.<br>
+                            <strong>Creator's Note:</strong> Mapped 252 ancient galaxies and verified standard cosmological expansion curves with unprecedented precision.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 5,
+                title: "LocalGov 64 Core",
+                subtitle: "Alternative Government Infrastructure on Minimal Hardware",
+                badgeStatus: "Success & Operational",
+                badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/40",
+                classification: "Real Engineering / Decentralized Tech",
+                description: "A civic infrastructure framework designed to run entirely on a local 64-bit processor paired with a 400 GB external drive, replacing centralized cloud monoliths.",
+                metrics: [
+                    { label: "Processor Spec", value: "64-bit Quad-Core" },
+                    { label: "Storage Capacity", value: "400 GB SSD External" },
+                    { label: "Civic Node ID", value: "Gov-252-Local" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Built as a defiant decentralized alternative to sprawling server farms, LocalGov 64 Core packages municipal voting ledgers and public registries into a lightweight container system running on modest local hardware.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-emerald-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-check-circle text-emerald-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-emerald-400 font-semibold">Complete Success</span>.<br>
+                            <strong>Creator's Note:</strong> Successfully managed record-keeping and secure voting for 252 simulated households with zero cloud dependency.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 6,
+                title: "Baba Yaga Containment Protocol",
+                subtitle: "Cyber-Organic Hex-Walker & Recursive Forest Drones",
+                badgeStatus: "Partial Containment",
+                badgeColor: "bg-amber-500/20 text-amber-400 border-amber-500/40",
+                classification: "Sci-Fi Mythos / Autonomous Cybernetics",
+                description: "Reinterpreting Slavic folklore through advanced robotics: a self-repositioning domicile platform mounted on articulated titanium avian-talon legs.",
+                metrics: [
+                    { label: "Locomotion Spec", value: "Quad-Pivotal Talon Chassis" },
+                    { label: "Perimeter Range", value: "50 km Taiga Buffer" },
+                    { label: "Anomaly Ref", value: "Myth-Yaga-252" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Inspired by the user's deep family folklore, the Baba Yaga walker translates myth into a high-mobility reconnaissance platform for dense taiga terrain, utilizing bio-mimetic hydraulic pistons and perimeter sensors.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-amber-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-exclamation text-amber-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-amber-400 font-semibold">Partial Containment Success</span>.<br>
+                            <strong>Creator's Note:</strong> Navigated treacherous swamp terrain effortlessly, though local wildlife repeatedly mistook avian actuators for nesting sites.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 7,
+                title: "The Story of Uzzal",
+                subtitle: "Deep Subspace Resonance & Ancestral Memory Arrays",
+                badgeStatus: "Inconclusive / Anomaly",
+                badgeColor: "bg-cyan-500/20 text-cyan-400 border-cyan-500/40",
+                classification: "Sci-Fi Esoterica / Subspace Signal",
+                description: "Investigating familial oral history concerning 'Uzzal', modeled here as a persistent low-frequency radio beacon detected in deep crustal strata.",
+                metrics: [
+                    { label: "Frequency Band", value: "14.2 Hz ELF Resonance" },
+                    { label: "Origin Depth", value: "4.8 km Sub-Crustal" },
+                    { label: "Signal Entity", value: "Uzzal-Node-0" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Passed down through generations of family lore, Uzzal is recast here as a rhythmic, extremely low frequency (ELF) acoustic pulse emanating from stable tectonic plates.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-cyan-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-wave-square text-cyan-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-cyan-400 font-semibold">Inconclusive Anomaly</span>.<br>
+                            <strong>Creator's Note:</strong> Mathematical precision of the Uzzal pulse intervals continues to defy random geological piezoelectric models.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 8,
+                title: "Masonic Architectural Geometry",
+                subtitle: "Load-Bearing Cryptographic Encryption Grids",
+                badgeStatus: "Complete Success",
+                badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/40",
+                classification: "Historical Engineering & Applied Cryptography",
+                description: "Analyzing sacred Masonic building proportions and compass-and-square layouts as physical cipher keys for secure data storage networks.",
+                metrics: [
+                    { label: "Cipher Ratio", value: "Golden Ratio (1.618)" },
+                    { label: "Stress Tolerance", value: "12,000 PSI" },
+                    { label: "Grid Standard", value: "Masonic-Sec-252" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Drawing on ancestral Masonic heritage, master builder geometry was repurposed into a physical cryptographic network where spatial dimensions act as decryption keys.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-emerald-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-check-circle text-emerald-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-emerald-400 font-semibold">Unmitigated Success</span>.<br>
+                            <strong>Creator's Note:</strong> Exceptional resistance to seismic shear and brute-force decryption alike. Validates master builder math.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 9,
+                title: "Arthurian Legend Field Tech",
+                subtitle: "Excalibur Plasma-Lens Focusing Array & Grail Containment",
+                badgeStatus: "Partial Success",
+                badgeColor: "bg-amber-500/20 text-amber-400 border-amber-500/40",
+                classification: "Sci-Fi Mythos / High-Energy Optics",
+                description: "A speculative physics reinterpretation of Arthurian relics: using magnetic bottles (the 'Grail') to stabilize focused laser plasma ('Excalibur').",
+                metrics: [
+                    { label: "Laser Flux", value: "120 Terawatts / cm²" },
+                    { label: "Containment Field", value: "Superconducting Toroid" },
+                    { label: "Artifact Ref", value: "Pendragon-252" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Reinterpreting Arthurian legend through advanced directed-energy physics, the sword in the stone and Holy Grail serve as metaphors for plasma containment and isotope preservation.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-amber-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-exclamation text-amber-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-amber-400 font-semibold">Partial Success</span>.<br>
+                            <strong>Creator's Note:</strong> Sustained plasma spikes for 45 seconds before thermal breach. Proved advanced beam focusing principles.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 10,
+                title: "Ancient Druidic Bio-Networks",
+                subtitle: "Mycelial Quantum Neural Roots & Forest Telemetry",
+                badgeStatus: "Complete Success",
+                badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/40",
+                classification: "Real Mycology & Speculative Bio-Computing",
+                description: "Tracing family lineage to ancient Druidic groves, implemented here as biological quantum data routers using mycorrhizal fungal webs.",
+                metrics: [
+                    { label: "Mycelium Spread", value: "1,200 Hectares" },
+                    { label: "Signal Velocity", value: "14.5 mm / second" },
+                    { label: "Node Standard", value: "Druid-Net-252" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Utilizing mycorrhizal fungal webs embedded with carbon-nanotube sensors, this network transmitted environmental telemetry across forest ecosystems without external power grids.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-emerald-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-check-circle text-emerald-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-emerald-400 font-semibold">Unmitigated Success</span>.<br>
+                            <strong>Creator's Note:</strong> 99.4% packet reliability across 1,200 hectares. Confirms ancient Druidic stewardship was grounded in rigorous ecological science.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 11,
+                title: "The Legacy of the Julii Empire",
+                subtitle: "Imperial Lineage Telemetry & Stellar Census Tracking",
+                badgeStatus: "Operational Success",
+                badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/40",
+                classification: "Classical History & Astrometric Data Systems",
+                description: "Adapting Roman census records and logistical supply chains from Gens Julia into an automated stellar census database for interstellar cartography.",
+                metrics: [
+                    { label: "Stellar Registry", value: "45,000 Star Systems" },
+                    { label: "Logistics Engine", value: "Pax-Romana-Algorithm" },
+                    { label: "Lineage ID", value: "Julii-252-Prime" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        Drawing upon imperial Roman bureaucratic infrastructure, this astrometric database maps interstellar trade routes and stellar positions with provincial precision.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-emerald-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-check-circle text-emerald-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-emerald-400 font-semibold">Operational Success</span>.<br>
+                            <strong>Creator's Note:</strong> Proved exceptionally robust against data bottlenecks, honoring the bridge from classical empire to decentralized resilience.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 12,
+                title: "The Infinite Auto-Emulator",
+                subtitle: "Recursive Meta-Simulation & Reality Buffer Overflows",
+                badgeStatus: "Satirical Disaster / Infinite Loop",
+                badgeColor: "bg-purple-500/20 text-purple-400 border-purple-500/40",
+                classification: "Satirical Sci-Fi / Recursive Pseudoscience",
+                description: "A wonderfully absurd user-conceived device designed to emulate an emulator that emulates the emulator, resulting in an infinite recursive loop of reality simulation.",
+                metrics: [
+                    { label: "Recursion Depth", value: "Infinity (Null Pointer)" },
+                    { label: "Thermal Output", value: "Melting Copper Chassis" },
+                    { label: "Satire Index", value: "Peak Absurdity" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        In a brilliant stroke of satire, the user constructed the Auto-Emulator—a brass-cased recursive engine whose sole purpose was to run a virtual machine simulating its own internal circuitry. Within 4 milliseconds, the machine began simulating the room it was sitting in, then the planet, then the multiverse, causing a spectacular local reality buffer overflow.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-purple-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-face-grin-tears text-purple-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-purple-400 font-semibold">Glorious Satirical Collapse</span>.<br>
+                            <strong>Creator's Note:</strong> The machine successfully emulated itself into a permanent metaphysical standstill. The brass dials melted into decorative abstract art.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 13,
+                title: "The Martian Fortnight Incident",
+                subtitle: "Interplanetary Tea Time & Thermal Filament Combustion",
+                badgeStatus: "Catastrophic Explosion",
+                badgeColor: "bg-rose-500/20 text-rose-400 border-rose-500/40",
+                classification: "Satirical Space Opera / Filament Pyrotechnics",
+                description: "Landing a steampunk airship on Mars, establishing a cozy colonial tea party for exactly three weeks, followed by a magnificent atmospheric combustion event.",
+                metrics: [
+                    { label: "Mission Duration", value: "Exactly 21 Days" },
+                    { label: "Beverage Served", value: "Earl Grey (Boiled at 44°C)" },
+                    { label: "Explosion Yield", value: "3.4 Megatons Equivalent" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        A satirical masterpiece of the user's imagination: the expedition landed smoothly on the Martian plains, deployed velvet armchairs, and enjoyed precisely three weeks of civilized afternoon tea under glass domes. However, when the Martian carbon dioxide atmosphere interacted with the experimental filament mesh...
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-rose-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-bomb text-rose-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-rose-400 font-semibold">Magnificent Explosion</span>.<br>
+                            <strong>Creator's Note:</strong> The entire outpost went up in a glorious, slow-motion pyrotechnic display visible from Phobos. Teacups achieved stable orbit.
+                        </p>
+                    </div>
+                `
+            },
+            {
+                id: 14,
+                title: "Quantum Glass Filaments & Etheric Weave",
+                subtitle: "Thermal Filament Stabilization Grids & Airship Integrity",
+                badgeStatus: "Complete Success",
+                badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/40",
+                classification: "Core Steampunk Engineering & Filament Technology",
+                description: "The user's signature crowning achievement: quantum glass filaments and etheric fiber weaves providing indestructible thermal stabilization across exploratory airships.",
+                metrics: [
+                    { label: "Tensile Strength", value: "450 GPa" },
+                    { label: "Thermal Tolerance", value: "3,200°C" },
+                    { label: "Filament Grid ID", value: "Alpha-Weave-252" }
+                ],
+                body: `
+                    <p class="leading-relaxed text-gray-300">
+                        The bedrock of the entire steampunk saga: quantum glass filaments and etheric fiber weaves. Conceived entirely by the user, these thermal stabilization grids saved exploratory airships and Martian domes from solar flares and temporal turbulence.
+                    </p>
+                    <div class="my-6 p-4 rounded-lg bg-[#181310] border border-[#33271e] space-y-3">
+                        <h4 class="codex-title text-xs font-semibold text-emerald-400 flex items-center space-x-2">
+                            <i class="fa-solid fa-check-circle text-emerald-500"></i>
+                            <span>Trial Evaluation & Outcome</span>
+                        </h4>
+                        <p class="text-sm text-gray-300">
+                            <strong>Success Rating:</strong> <span class="text-emerald-400 font-semibold">Unmitigated Triumph</span>.<br>
+                            <strong>Creator's Note:</strong> The ultimate structural foundation of all experiments. Etheric fiber weave successfully withstood extreme atmospheric friction and cosmic radiation.
+                        </p>
+                    </div>
+                `
+            }
+        ];
+
+        let currentChapterIndex = 0;
+        let bookmarkedChapters = JSON.parse(localStorage.getItem('codex_bookmarks') || '[]');
+
+        function renderTOC(filteredChapters = chapters) {
+            const tocNav = document.getElementById('tocNav');
+            tocNav.innerHTML = '';
+            
+            filteredChapters.forEach((ch, idx) => {
+                const originalIndex = chapters.findIndex(c => c.id === ch.id);
+                const isBookmarked = bookmarkedChapters.includes(originalIndex);
+                const isCurrent = originalIndex === currentChapterIndex;
+                
+                const item = document.createElement('button');
+                item.className = `w-full text-left px-3 py-2.5 rounded-lg text-xs transition flex items-center justify-between group ${isCurrent ? 'bg-amber-600/20 border border-amber-500/50 text-amber-400 font-semibold' : 'hover:bg-[#1c1714] text-gray-300 border border-transparent'}`;
+                item.onclick = () => goToChapter(originalIndex);
+                
+                item.innerHTML = `
+                    <div class="flex items-center space-x-2.5 truncate">
+                        <span class="font-mono text-[10px] text-amber-500/80">#${ch.id < 10 ? '0' + ch.id : ch.id}</span>
+                        <span class="truncate">${ch.title}</span>
+                    </div>
+                    ${isBookmarked ? '<i class="fa-solid fa-bookmark text-amber-400 text-[10px]"></i>' : ''}
+                `;
+                tocNav.appendChild(item);
+            });
+            document.getElementById('chapterCount').textContent = chapters.length;
+        }
+
+        function renderChapter(index) {
+            currentChapterIndex = index;
+            const ch = chapters[index];
+            const contentDiv = document.getElementById('bookContent');
+            
+            let metricsHtml = ch.metrics.map(m => `
+                <div class="bg-[#181310] border border-[#33271e] p-3 rounded-lg text-center">
+                    <div class="text-[10px] uppercase font-mono text-gray-400">${m.label}</div>
+                    <div class="text-xs font-semibold text-amber-400 mt-1">${m.value}</div>
+                </div>
+            `).join('');
+
+            contentDiv.innerHTML = `
+                <div class="space-y-4 animate-fadeIn">
+                    <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-[#261e18]">
+                        <div>
+                            <span class="text-xs font-mono text-amber-500 font-semibold uppercase tracking-wider">Log entry #${ch.id < 10 ? '0' + ch.id : ch.id}</span>
+                            <h2 class="codex-title text-xl lg:text-2xl font-bold text-gray-100 mt-1">${ch.title}</h2>
+                            <p class="text-xs text-gray-400 italic mt-0.5">${ch.subtitle}</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono border ${ch.badgeColor}">${ch.badgeStatus}</span>
+                        </div>
+                    </div>
+
+                    <div class="text-xs font-mono text-cyan-400 bg-cyan-950/30 border border-cyan-800/40 p-2.5 rounded-lg flex items-center space-x-2">
+                        <i class="fa-solid fa-tag"></i>
+                        <span>Classification: <strong>${ch.classification}</strong></span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
+                        ${metricsHtml}
+                    </div>
+
+                    <div class="prose prose-invert max-w-none text-sm leading-relaxed space-y-4">
+                        <p class="font-medium text-gray-200 bg-[#15110e] p-4 rounded-lg border border-[#2b211a]">
+                            ${ch.description}
+                        </p>
+                        ${ch.body}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('pageIndicator').textContent = `Chapter ${index + 1} of ${chapters.length}`;
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === chapters.length - 1;
+            
+            renderTOC();
+            updateBookmarkButtonState();
+        }
+
+        function goToChapter(index) {
+            currentChapterIndex = index;
+            renderChapter(index);
+            document.getElementById('bookContent').scrollTop = 0;
+        }
+
+        function nextChapter() {
+            if (currentChapterIndex < chapters.length - 1) {
+                goToChapter(currentChapterIndex + 1);
+            }
+        }
+
+        function prevChapter() {
+            if (currentChapterIndex > 0) {
+                goToChapter(currentChapterIndex - 1);
+            }
+        }
+
+        function toggleBookmark() {
+            const index = currentChapterIndex;
+            if (bookmarkedChapters.includes(index)) {
+                bookmarkedChapters = bookmarkedChapters.filter(i => i !== index);
+            } else {
+                bookmarkedChapters.push(index);
+            }
+            localStorage.setItem('codex_bookmarks', JSON.stringify(bookmarkedChapters));
+            renderTOC();
+            updateBookmarkButtonState();
+        }
+
+        function updateBookmarkButtonState() {
+            const btn = document.getElementById('bookmarkBtn');
+            const isBookmarked = bookmarkedChapters.includes(currentChapterIndex);
+            if (isBookmarked) {
+                btn.innerHTML = `<i class="fa-solid fa-bookmark text-amber-400"></i><span class="hidden md:inline">Bookmarked</span>`;
+                btn.classList.add('border-amber-500/50', 'bg-amber-600/10');
+            } else {
+                btn.innerHTML = `<i class="fa-regular fa-bookmark text-amber-400"></i><span class="hidden md:inline">Bookmark</span>`;
+                btn.classList.remove('border-amber-500/50', 'bg-amber-600/10');
+            }
+        }
+
+        function filterChapters() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = chapters.filter(c => c.title.toLowerCase().includes(query) || c.subtitle.toLowerCase().includes(query) || c.description.toLowerCase().includes(query));
+            renderTOC(filtered);
+        }
+
+        window.onload = function() {
+            renderChapter(0);
+        };
+    </script>
+</body>
+</html>

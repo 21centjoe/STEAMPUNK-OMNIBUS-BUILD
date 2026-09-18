@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Grand Steampunk Omnibus Index - Protocol 252</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Special+Elite&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brass: #c5a059;
+            --brass-light: #e5c158;
+            --brass-dark: #5a4519;
+            --neon-cyan: #66fcf1;
+            --obsidian: #0b0c10;
+            --gunmetal: #1f2833;
+            --silver: #c5c6c7;
+        }
+
+        body {
+            background-color: var(--obsidian);
+            color: var(--silver);
+            font-family: 'Special Elite', monospace;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(102, 252, 241, 0.03) 0%, transparent 80%),
+                linear-gradient(rgba(11, 12, 16, 0.9), rgba(11, 12, 16, 0.9));
+        }
+
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-code { font-family: 'Fira Code', monospace; }
+
+        /* Steampunk Riveted Frame */
+        .steampunk-frame {
+            border: 8px solid var(--brass);
+            border-image: linear-gradient(to bottom right, var(--brass-light), var(--brass-dark), var(--brass)) 1;
+            box-shadow: 0 0 40px rgba(102, 252, 241, 0.15), inset 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .rivet {
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, var(--brass-light) 30%, var(--brass-dark) 100%);
+            border-radius: 50%;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+            position: absolute;
+            z-index: 50;
+        }
+        .r-tl { top: -14px; left: -14px; }
+        .r-tr { top: -14px; right: -14px; }
+        .r-bl { bottom: -14px; left: -14px; }
+        .r-br { bottom: -14px; right: -14px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start p-4 md:p-8">
+
+    <header class="w-full max-w-5xl steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl mb-8 relative z-10">
+        <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+        
+        <div class="text-center">
+            <h1 class="font-cinzel text-3xl md:text-4xl font-black text-[#c5a059] tracking-widest">
+                THE GRAND STEAMPOWER OMNIBUS DIRECTORY
+            </h1>
+            <p class="text-xs text-[#66fcf1] tracking-wider mt-2">
+                MASTER COMPENDIUM & PORTAL TO ALL STEAM-PUNK MODULES
+            </p>
+        </div>
+    </header>
+
+    <main class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+
+        <!-- Module 1 -->
+        <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl flex flex-col justify-between">
+            <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+            <div>
+                <span class="text-[10px] font-code bg-[#0b0c10] text-[#c5a059] px-2.5 py-1 rounded border border-[#c5a059]/40">MODULE I</span>
+                <h2 class="font-cinzel text-xl text-[#c5a059] mt-3 mb-2">The Omnibus Quest Casino</h2>
+                <p class="text-xs text-gray-300 mb-6">
+                    Interactive quantum arcade, mechanical dice rolling, custom card forge, sandbox rule editor, and Gemini Coin economics.
+                </p>
+            </div>
+            <a href="the_omnibus_quest_casino.html" class="block text-center bg-[#c5a059] text-[#0b0c10] font-cinzel font-bold py-2.5 rounded shadow hover:bg-[#e5c158] transition">
+                Launch Casino[cite: 1]
+            </a>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl flex flex-col justify-between">
+            <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+            <div>
+                <span class="text-[10px] font-code bg-[#0b0c10] text-[#66fcf1] px-2.5 py-1 rounded border border-[#66fcf1]/40">MODULE II</span>
+                <h2 class="font-cinzel text-xl text-[#c5a059] mt-3 mb-2">Omnibus Card Template</h2>
+                <p class="text-xs text-gray-300 mb-6">
+                    3D holographic parallax card generator featuring rotating gyroscopes, dynamic cog speed shifting, and quantum dodecahedron core.
+                </p>
+            </div>
+            <a href="gemini-code-1789742363325.html" class="block text-center bg-[#c5a059] text-[#0b0c10] font-cinzel font-bold py-2.5 rounded shadow hover:bg-[#e5c158] transition">
+                Launch Card Template[cite: 2]
+            </a>
+        </div>
+
+        <!-- Module 3 -->
+        <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl flex flex-col justify-between">
+            <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+            <div>
+                <span class="text-[10px] font-code bg-[#0b0c10] text-[#66fcf1] px-2.5 py-1 rounded border border-[#66fcf1]/40">MODULE III</span>
+                <h2 class="font-cinzel text-xl text-[#c5a059] mt-3 mb-2">The Eco-Steampunk Digital Omnibus</h2>
+                <p class="text-xs text-gray-300 mb-6">
+                    Multi-volume digital book exploring temporal archives, Pecos River frontiers, Newton's string theory, and interstellar starship survival.
+                </p>
+            </div>
+            <a href="eco_steampunk_digital_omnibus.html" class="block text-center bg-[#c5a059] text-[#0b0c10] font-cinzel font-bold py-2.5 rounded shadow hover:bg-[#e5c158] transition">
+                Launch Digital Omnibus[cite: 3]
+            </a>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl flex flex-col justify-between">
+            <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+            <div>
+                <span class="text-[10px] font-code bg-[#0b0c10] text-[#c5a059] px-2.5 py-1 rounded border border-[#c5a059]/40">MODULE IV</span>
+                <h2 class="font-cinzel text-xl text-[#c5a059] mt-3 mb-2">The Grand Master Archive</h2>
+                <p class="text-xs text-gray-300 mb-6">
+                    Interactive digital booklet and reader indexing fourteen experimental logs, trial evaluations, telemetry metrics, and research notes.
+                </p>
+            </div>
+            <a href="experimental_project_digital_booklet.html" class="block text-center bg-[#c5a059] text-[#0b0c10] font-cinzel font-bold py-2.5 rounded shadow hover:bg-[#e5c158] transition">
+                Launch Master Archive[cite: 4]
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="mt-12 text-center text-xs font-code text-gray-400 relative z-10">
+        <p>Licensed under the GNU Affero General Public License (AGPL). Single directory build.</p>
+    </footer>
+
+</body>
+</html>

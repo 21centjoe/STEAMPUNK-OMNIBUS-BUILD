@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Omnibus Quest Casino - Protocol 252</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Special+Elite&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brass: #c5a059;
+            --brass-light: #e5c158;
+            --brass-dark: #5a4519;
+            --neon-cyan: #66fcf1;
+            --obsidian: #0b0c10;
+            --gunmetal: #1f2833;
+            --silver: #c5c6c7;
+        }
+
+        body {
+            background-color: var(--obsidian);
+            color: var(--silver);
+            font-family: 'Special Elite', monospace;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(102, 252, 241, 0.03) 0%, transparent 80%),
+                linear-gradient(rgba(11, 12, 16, 0.9), rgba(11, 12, 16, 0.9)),
+                repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(197, 160, 89, 0.02) 40px, rgba(197, 160, 89, 0.02) 41px);
+        }
+
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-code { font-family: 'Fira Code', monospace; }
+
+        /* Steampunk Riveted Frame */
+        .steampunk-frame {
+            border: 8px solid var(--brass);
+            border-image: linear-gradient(to bottom right, var(--brass-light), var(--brass-dark), var(--brass)) 1;
+            box-shadow: 0 0 40px rgba(102, 252, 241, 0.15), inset 0 0 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .rivet {
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, var(--brass-light) 30%, var(--brass-dark) 100%);
+            border-radius: 50%;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+            position: absolute;
+            z-index: 50;
+        }
+        .r-tl { top: -14px; left: -14px; }
+        .r-tr { top: -14px; right: -14px; }
+        .r-bl { bottom: -14px; left: -14px; }
+        .r-br { bottom: -14px; right: -14px; }
+
+        /* Cogwheels Animation */
+        .cogwheel {
+            position: absolute;
+            opacity: 0.12;
+            animation: spin 25s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Quantum Dodecahedron Hologram */
+        .dodecahedron-wrap {
+            perspective: 1000px;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto;
+        }
+        .quantum-dodeca {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float-rotate 12s ease-in-out infinite;
+        }
+        @keyframes float-rotate {
+            0% { transform: rotateX(15deg) rotateY(0deg) translateY(0); }
+            50% { transform: rotateX(45deg) rotateY(180deg) translateY(-10px); }
+            100% { transform: rotateX(15deg) rotateY(360deg) translateY(0); }
+        }
+        .face {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            left: 40px;
+            top: 40px;
+            background: linear-gradient(135deg, rgba(102, 252, 241, 0.25), rgba(197, 160, 89, 0.15));
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(102, 252, 241, 0.4);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        }
+
+        /* Tab Transitions */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Neon Glows */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.6);
+        }
+        .glow-box {
+            box-shadow: 0 0 20px rgba(102, 252, 241, 0.25);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start p-4 md:p-8">
+
+    <!-- Background Cogwheels -->
+    <svg class="cogwheel" style="width: 300px; top: 20px; left: 20px;" viewBox="0 0 100 100"><path fill="var(--brass)" d="M50 15a5 5 0 015-5h10a5 5 0 015 5v5.5a35 35 0 0110.6 4.4l4-4a5 5 0 017 0l7.1 7.1a5 5 0 010 7l-4 4A35 35 0 0190 45h5.5a5 5 0 015 5v10a5 5 0 01-5 5H90a35 35 0 01-4.4 10.6l4 4a5 5 0 010 7l-7.1 7.1a5 5 0 01-7 0l-4-4A35 35 0 0155 89.5V95a5 5 0 01-5 5H40a5 5 0 01-5-5v-5.5a35 35 0 01-10.6-4.4l-4 4a5 5 0 01-7 0L10.2 78a5 5 0 010-7l4-4A35 35 0 0110 55H4.5a5 5 0 01-5-5V40a5 5 0 015-5H10a35 35 0 014.4-10.6l-4-4a5 5 0 010-7l7.1-7.1a5 5 0 017 0l4 4A35 35 0 0135 20.5V15zM50 30a20 20 0 100 40 20 20 0 000-40z"/></svg>
+    <svg class="cogwheel" style="width: 350px; bottom: 20px; right: 20px; animation-direction: reverse;" viewBox="0 0 100 100"><path fill="var(--neon-cyan)" d="M50 15a5 5 0 015-5h10a5 5 0 015 5v5.5a35 35 0 0110.6 4.4l4-4a5 5 0 017 0l7.1 7.1a5 5 0 010 7l-4 4A35 35 0 0190 45h5.5a5 5 0 015 5v10a5 5 0 01-5 5H90a35 35 0 01-4.4 10.6l4 4a5 5 0 010 7l-7.1 7.1a5 5 0 01-7 0l-4-4A35 35 0 0155 89.5V95a5 5 0 01-5 5H40a5 5 0 01-5-5v-5.5a35 35 0 01-10.6-4.4l-4 4a5 5 0 01-7 0L10.2 78a5 5 0 010-7l4-4A35 35 0 0110 55H4.5a5 5 0 01-5-5V40a5 5 0 015-5H10a35 35 0 014.4-10.6l-4-4a5 5 0 010-7l7.1-7.1a5 5 0 017 0l4 4A35 35 0 0135 20.5V15zM50 30a20 20 0 100 40 20 20 0 000-40z"/></svg>
+
+    <header class="w-full max-w-6xl steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl mb-6 relative z-10">
+        <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+        
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="font-cinzel text-3xl md:text-4xl font-black text-[#c5a059] glow-text tracking-widest text-center md:text-left">
+                    THE OMNIBUS QUEST CASINO
+                </h1>
+                <p class="text-xs text-[#66fcf1] tracking-wider text-center md:text-left mt-1">
+                    PROTOCOL 252: QUANTUM COMPUTING & STEAMPUNK AUTOMATA
+                </p>
+            </div>
+            
+            <div class="flex items-center gap-4 bg-[#0b0c10] px-4 py-2 rounded-lg border border-[#c5a059]">
+                <div class="text-right">
+                    <div class="text-[10px] text-[#c5a059] uppercase tracking-wider">Gemini Coin Vault</div>
+                    <div class="text-xl font-code font-bold text-[#66fcf1]" id="coinBalance">1,250.00 GC</div>
+                </div>
+                <div class="border-l border-[#45a29e] pl-4 text-left">
+                    <div class="text-[10px] text-gray-400 uppercase tracking-wider">GOOGL Value Index</div>
+                    <div class="text-sm font-code text-emerald-400" id="googleStockPrice">$178.45</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex flex-wrap gap-2 mt-6 pt-4 border-t border-[#c5a059]/40 justify-center md:justify-start">
+            <button onclick="switchTab('casino')" id="btn-casino" class="px-5 py-2 font-cinzel text-sm font-bold bg-[#c5a059] text-[#0b0c10] rounded shadow transition hover:bg-[#e5c158]">
+                Quest Casino
+            </button>
+            <button onclick="switchTab('workshop')" id="btn-workshop" class="px-5 py-2 font-cinzel text-sm font-bold bg-[#1f2833] text-[#66fcf1] border border-[#66fcf1] rounded shadow transition hover:bg-[#66fcf1]/20">
+                Omnibus Deck Builder
+            </button>
+            <button onclick="switchTab('editor')" id="btn-editor" class="px-5 py-2 font-cinzel text-sm font-bold bg-[#1f2833] text-[#66fcf1] border border-[#66fcf1] rounded shadow transition hover:bg-[#66fcf1]/20">
+                Code & Rule Sandbox
+            </button>
+            <button onclick="switchTab('economy')" id="btn-economy" class="px-5 py-2 font-cinzel text-sm font-bold bg-[#1f2833] text-[#66fcf1] border border-[#66fcf1] rounded shadow transition hover:bg-[#66fcf1]/20">
+                Gemini Coin Market
+            </button>
+        </div>
+    </header>
+
+    <main class="w-full max-w-6xl relative z-10">
+
+        <div id="tab-casino" class="tab-content active space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Left: Quantum Dodecahedron Engine -->
+                <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl flex flex-col items-center justify-between">
+                    <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+                    <h3 class="font-cinzel text-lg text-[#c5a059] mb-4 text-center">Holographic Dodecahedron Core</h3>
+                    
+                    <div class="dodecahedron-wrap my-4 cursor-pointer" onclick="pulseCore()">
+                        <div class="quantum-dodeca">
+                            <div class="face" style="transform: rotateY(0deg) translateZ(70px);"></div>
+                            <div class="face" style="transform: rotateY(72deg) translateZ(70px);"></div>
+                            <div class="face" style="transform: rotateY(144deg) translateZ(70px);"></div>
+                            <div class="face" style="transform: rotateY(216deg) translateZ(70px);"></div>
+                            <div class="face" style="transform: rotateY(288deg) translateZ(70px);"></div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-xs text-center text-gray-300 mt-2">
+                        Click the quantum core to synchronize computational resonance. Boosts card draw luck by +15%.
+                    </p>
+                    <div class="w-full bg-[#0b0c10] p-2 rounded border border-[#66fcf1]/40 mt-4 text-center font-code text-xs text-[#66fcf1]" id="coreStatus">
+                        Resonance: STABLE (1.00x)
+                    </div>
+                </div>
+
+                <!-- Center: Cardboard Dice Roller & Quest Simulator -->
+                <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl lg:col-span-2 flex flex-col justify-between">
+                    <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+                    
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-cinzel text-xl text-[#c5a059]">The Cardboard Dice & Quest Table</h3>
+                            <span class="text-xs bg-[#0b0c10] text-[#66fcf1] px-3 py-1 rounded border border-[#66fcf1]">Stake: 50 GC</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-6">
+                            Roll the heavy cardboard mechanical dice to trigger omnibus node bounties. Match dragon lineages (Ether, Clockwork, Obsidian, Zephyr) with Peacock Optics & Gyroscopes.
+                        </p>
+
+                        <!-- Dice Arena -->
+                        <div class="flex justify-center items-center gap-6 my-8">
+                            <div id="die1" class="w-20 h-20 bg-[#d97706] text-[#0b0c10] font-cinzel text-3xl font-black rounded-xl flex items-center justify-center shadow-lg border-2 border-[#f59e0b] transform transition-transform duration-300">
+                                ⚀
+                            </div>
+                            <div id="die2" class="w-20 h-20 bg-[#d97706] text-[#0b0c10] font-cinzel text-3xl font-black rounded-xl flex items-center justify-center shadow-lg border-2 border-[#f59e0b] transform transition-transform duration-300">
+                                ⚃
+                            </div>
+                        </div>
+
+                        <div id="questLog" class="bg-[#0b0c10] p-4 rounded-lg border border-[#c5a059]/40 text-xs font-code text-emerald-400 min-h-[60px] flex items-center justify-center text-center">
+                            Awaiting your wager to initialize quest protocol...
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex gap-4">
+                        <button onclick="rollDiceQuest()" class="flex-1 bg-gradient-to-r from-[#c5a059] to-[#d97706] text-[#0b0c10] font-cinzel font-bold py-3 rounded-lg shadow-lg hover:brightness-110 transition active:scale-95">
+                            Roll Dice & Wager (50 GC)
+                        </button>
+                        <button onclick="drawOmnibusCard()" class="px-6 bg-[#1f2833] text-[#66fcf1] border border-[#66fcf1] font-cinzel font-bold py-3 rounded-lg hover:bg-[#66fcf1]/20 transition active:scale-95">
+                            Draw Omnibus Card
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Active Drawn Card Display Area -->
+            <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl">
+                <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+                <h3 class="font-cinzel text-lg text-[#c5a059] mb-4">Latest Omnibus Entity Manifestation</h3>
+                <div id="cardDisplayArea" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Default Card Slot -->
+                    <div class="bg-[#0b0c10] border-2 border-[#c5a059] p-4 rounded-lg relative overflow-hidden glow-box">
+                        <div class="flex justify-between items-center border-b border-[#66fcf1] pb-2 mb-3">
+                            <span class="font-cinzel text-[#66fcf1] text-sm">Peacock Automata Node</span>
+                            <span class="text-[10px] text-[#c5a059]">KEY #409</span>
+                        </div>
+                        <div class="h-32 bg-gradient-to-br from-[#1f2833] to-[#0b0c10] rounded border border-[#45a29e] flex items-center justify-center relative">
+                            <span class="text-4xl">🦚⚙️</span>
+                        </div>
+                        <div class="mt-3 text-xs text-gray-300">
+                            Merges optical peacock plumage with brass wheels and Ether dragon resonance.
+                        </div>
+                        <div class="mt-3 flex justify-between items-center text-xs text-[#66fcf1] border-t border-gray-800 pt-2">
+                            <span>Lineage: Ether</span>
+                            <span>Power: 850 QPU</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-workshop" class="tab-content space-y-6">
+            <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl">
+                <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+                
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="font-cinzel text-2xl text-[#c5a059]">Omnibus Card Forge & Deck Builder</h2>
+                        <p class="text-xs text-gray-300 mt-1">Combine peacocks, gyroscopes, keys, wheels, and dragon types to forge custom quest cards.</p>
+                    </div>
+                    <button onclick="forgeNewCard()" class="bg-[#c5a059] text-[#0b0c10] font-cinzel font-bold px-4 py-2 rounded shadow hover:bg-[#e5c158] transition">
+                        Forge Card (100 GC)
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="forgePartsGrid">
+                    <div class="bg-[#0b0c10] p-4 rounded border border-[#c5a059]">
+                        <h4 class="font-cinzel text-sm text-[#66fcf1] mb-2">1. Automata Component</h4>
+                        <select id="partAutomata" class="w-full bg-[#1f2833] border border-[#45a29e] text-xs p-2 rounded text-white">
+                            <option>Mechanical Peacock Plumes</option>
+                            <option>Dodecahedral Core</option>
+                            <option>Gyroscopic Ring Assembly</option>
+                        </select>
+                    </div>
+                    <div class="bg-[#0b0c10] p-4 rounded border border-[#c5a059]">
+                        <h4 class="font-cinzel text-sm text-[#66fcf1] mb-2">2. Dragon Lineage</h4>
+                        <select id="partDragon" class="w-full bg-[#1f2833] border border-[#45a29e] text-xs p-2 rounded text-white">
+                            <option>Ether Dragon (Quantum)</option>
+                            <option>Clockwork Dragon (Brass)</option>
+                            <option>Obsidian Dragon (Void)</option>
+                            <option>Zephyr Dragon (Aero)</option>
+                        </select>
+                    </div>
+                    <div class="bg-[#0b0c10] p-4 rounded border border-[#c5a059]">
+                        <h4 class="font-cinzel text-sm text-[#66fcf1] mb-2">3. Mechanism Token</h4>
+                        <select id="partToken" class="w-full bg-[#1f2833] border border-[#45a29e] text-xs p-2 rounded text-white">
+                            <option>Golden Master Key #7</option>
+                            <option>Differential Gear Wheel</option>
+                            <option>Holographic Prism</option>
+                        </select>
+                    </div>
+                    <div class="bg-[#0b0c10] p-4 rounded border border-[#c5a059] flex flex-col justify-center">
+                        <div class="text-[10px] text-gray-400 mb-1">Estimated QPU Output</div>
+                        <div class="font-code text-lg text-emerald-400 mb-2">1,420 QPU</div>
+                        <button onclick="forgeNewCard()" class="w-full bg-[#66fcf1] text-[#0b0c10] font-cinzel font-bold py-1 text-xs rounded hover:opacity-90">
+                            Synthesize
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h3 class="font-cinzel text-lg text-[#c5a059] mb-4">Your Forged Deck Inventory</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="deckInventory">
+                        <div class="bg-[#0b0c10] border border-[#45a29e] p-3 rounded flex justify-between items-center">
+                            <div>
+                                <div class="font-cinzel text-xs text-[#66fcf1]">Zephyr Gyro-Peacock</div>
+                                <div class="text-[10px] text-gray-400">Ether Dragon Lineage</div>
+                            </div>
+                            <span class="text-xs bg-[#c5a059]/20 text-[#c5a059] px-2 py-1 rounded">QPU: 1280</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-editor" class="tab-content space-y-6">
+            <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl">
+                <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="font-cinzel text-2xl text-[#c5a059]">Omnibus Rule & Script Sandbox</h2>
+                        <p class="text-xs text-gray-300 mt-1">Modify casino drop tables, dice multipliers, and quantum resonance formulas in real time.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="resetCode()" class="px-4 py-2 bg-gray-700 text-xs font-cinzel text-white rounded hover:bg-gray-600">Reset</button>
+                        <button onclick="executeSandboxCode()" class="px-4 py-2 bg-[#66fcf1] text-[#0b0c10] font-cinzel font-bold text-xs rounded hover:opacity-90">Inject & Run Script</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs text-[#66fcf1] mb-2 font-code">// Runtime Game Logic & Multipliers (JavaScript)</label>
+                        <textarea id="codeEditor" rows="14" class="w-full bg-[#0b0c10] border border-[#c5a059] font-code text-xs text-emerald-400 p-4 rounded-lg focus:outline-none focus:border-[#66fcf1] resize-none">// Omnibus Protocol 252 Rule Engine
+function calculateQuestReward(diceTotal, cardPower) {
+    const baseMultiplier = 2.5;
+    const quantumResonance = 1.15;
+    
+    // Tweak luck and payout calculations
+    let payout = (diceTotal * 15) + (cardPower * 0.1);
+    payout = payout * baseMultiplier * quantumResonance;
+    
+    return Math.floor(payout);
+}
+
+// Custom event trigger
+console.log("Omnibus Script injected successfully.");
+</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-[#66fcf1] mb-2 font-code">&gt;&gt; Console Execution Output & Logs</label>
+                        <div id="consoleOutput" class="w-full h-[280px] bg-[#0b0c10] border border-[#45a29e] font-code text-xs text-gray-300 p-4 rounded-lg overflow-y-auto">
+                            [System] Initialized Omnibus Script Environment v2.5.2...
+                            [System] Ready for code injection and live simulation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-economy" class="tab-content space-y-6">
+            <div class="steampunk-frame bg-[#1f2833]/90 p-6 rounded-xl">
+                <div class="rivet r-tl"></div><div class="rivet r-tr"></div><div class="rivet r-bl"></div><div class="rivet r-br"></div>
+                
+                <h2 class="font-cinzel text-2xl text-[#c5a059] mb-2">Gemini Coin Economic Engine</h2>
+                <p class="text-xs text-gray-300 mb-6">Gemini Coin (GC) is pegged directly to simulated Google (GOOGL) stock fluctuations. Use coins for in-app purchases or stream custom board/card games directly to your devices.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-[#0b0c10] p-5 rounded-lg border border-[#c5a059] text-center">
+                        <div class="text-xs text-gray-400 uppercase">Current GOOGL Peg</div>
+                        <div class="text-2xl font-code text-[#66fcf1] my-2" id="marketGoogl">$178.45</div>
+                        <div class="text-[10px] text-emerald-400">+1.42% Today</div>
+                    </div>
+                    <div class="bg-[#0b0c10] p-5 rounded-lg border border-[#c5a059] text-center">
+                        <div class="text-xs text-gray-400 uppercase">Exchange Ratio</div>
+                        <div class="text-2xl font-code text-[#c5a059] my-2">1 GOOGL = 100 GC</div>
+                        <div class="text-[10px] text-gray-400">Automated Smart Contract #992</div>
+                    </div>
+                    <div class="bg-[#0b0c10] p-5 rounded-lg border border-[#c5a059] text-center">
+                        <div class="text-xs text-gray-400 uppercase">Vault Balance</div>
+                        <div class="text-2xl font-code text-emerald-400 my-2" id="marketCoinBalance">1,250.00 GC</div>
+                        <button onclick="claimDailyStipend()" class="mt-1 px-3 py-1 bg-[#66fcf1] text-[#0b0c10] text-[10px] font-bold rounded hover:opacity-90">Claim Daily Stipend (+100 GC)</button>
+                    </div>
+                </div>
+
+                <h3 class="font-cinzel text-lg text-[#c5a059] mb-4">In-App Purchases & Game Streaming Terminal</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-[#0b0c10] p-5 rounded-lg border border-[#45a29e] flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs bg-[#c5a059]/20 text-[#c5a059] px-2 py-1 rounded">Expansion Pack</span>
+                            <h4 class="font-cinzel text-base text-white mt-3">Obsidian Dragon Lineage</h4>
+                            <p class="text-xs text-gray-400 mt-2">Unlocks void automata, dark gyroscopes, and legendary card templates.</p>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="font-code text-sm text-[#66fcf1]">250 GC</span>
+                            <button onclick="buyPackage('Obsidian Dragon Lineage', 250)" class="px-4 py-2 bg-[#c5a059] text-[#0b0c10] text-xs font-bold rounded hover:bg-[#e5c158]">Purchase</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#0b0c10] p-5 rounded-lg border border-[#45a29e] flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs bg-[#66fcf1]/20 text-[#66fcf1] px-2 py-1 rounded">Game Streaming</span>
+                            <h4 class="font-cinzel text-base text-white mt-3">Cardboard Dice VR Stream</h4>
+                            <p class="text-xs text-gray-400 mt-2">Stream your custom card-board dice game directly to any paired virtual device.</p>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="font-code text-sm text-[#66fcf1]">500 GC</span>
+                            <button onclick="buyPackage('Cardboard Dice VR Stream', 500)" class="px-4 py-2 bg-[#66fcf1] text-[#0b0c10] text-xs font-bold rounded hover:opacity-90">Stream Game</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#0b0c10] p-5 rounded-lg border border-[#45a29e] flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded">AI Node Boost</span>
+                            <h4 class="font-cinzel text-base text-white mt-3">Quantum Dodecahedron Overclock</h4>
+                            <p class="text-xs text-gray-400 mt-2">Permanent 2x luck boost on all quest rolls and omnibus card forges.</p>
+                        </div>
+                        <div class="mt-6 flex justify-between items-center">
+                            <span class="font-code text-sm text-[#66fcf1]">1,000 GC</span>
+                            <button onclick="buyPackage('Quantum Dodecahedron Overclock', 1000)" class="px-4 py-2 bg-emerald-500 text-[#0b0c10] text-xs font-bold rounded hover:opacity-90">Upgrade</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Global Game State
+        let gameState = {
+            coins: 1250.00,
+            googlPrice: 178.45,
+            resonance: 1.00,
+            forgedCards: [
+                { title: "Zephyr Gyro-Peacock", lineage: "Ether Dragon", qpu: 1280 }
+            ]
+        };
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('header button').forEach(btn => {
+                btn.className = "px-5 py-2 font-cinzel text-sm font-bold bg-[#1f2833] text-[#66fcf1] border border-[#66fcf1] rounded shadow transition hover:bg-[#66fcf1]/20";
+            });
+
+            document.getElementById('tab-' + tabId).classList.add('active');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.className = "px-5 py-2 font-cinzel text-sm font-bold bg-[#c5a059] text-[#0b0c10] rounded shadow transition hover:bg-[#e5c158]";
+        }
+
+        // Update UI Balances
+        function updateUI() {
+            document.getElementById('coinBalance').innerText = gameState.coins.toFixed(2) + ' GC';
+            document.getElementById('marketCoinBalance').innerText = gameState.coins.toFixed(2) + ' GC';
+            document.getElementById('googleStockPrice').innerText = '$' + gameState.googlPrice.toFixed(2);
+            document.getElementById('marketGoogl').innerText = '$' + gameState.googlPrice.toFixed(2);
+        }
+
+        // Quantum Dodecahedron Core Interaction
+        function pulseCore() {
+            gameState.resonance = parseFloat((gameState.resonance + 0.15).toFixed(2));
+            if (gameState.resonance > 2.00) gameState.resonance = 1.00;
+            document.getElementById('coreStatus').innerText = `Resonance: SYNCHRONIZED (${gameState.resonance.toFixed(2)}x)`;
+            
+            const core = document.querySelector('.quantum-dodeca');
+            core.style.animationDuration = (12 / gameState.resonance) + 's';
+        }
+
+        // Dice Quest Roll Mechanism
+        function rollDiceQuest() {
+            if (gameState.coins < 50) {
+                logConsole("[Error] Insufficient Gemini Coins for wager!");
+                alertBox("Insufficient Gemini Coins! Claim your daily stipend or win more quests.");
+                return;
+            }
+
+            gameState.coins -= 50;
+            updateUI();
+
+            const die1El = document.getElementById('die1');
+            const die2El = document.getElementById('die2');
+            
+            // Animation wiggle
+            die1El.style.transform = "rotate(360deg) scale(1.1)";
+            die2El.style.transform = "rotate(-360deg) scale(1.1)";
+
+            setTimeout(() => {
+                die1El.style.transform = "rotate(0deg) scale(1)";
+                die2El.style.transform = "rotate(0deg) scale(1)";
+
+                const roll1 = Math.floor(Math.random() * 6) + 1;
+                const roll2 = Math.floor(Math.random() * 6) + 1;
+                const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+
+                die1El.innerText = diceFaces[roll1 - 1];
+                die2El.innerText = diceFaces[roll2 - 1];
+
+                const totalRoll = roll1 + roll2;
+                
+                // Execute code snippet from sandbox if valid, otherwise default
+                let reward = 0;
+                try {
+                    const editorCode = document.getElementById('codeEditor').value;
+                    // Safe evaluation of the sandbox function
+                    const funcBody = editorCode + "\n return calculateQuestReward(" + totalRoll + ", 1000);";
+                    const dynamicCalc = new Function(funcBody);
+                    reward = Math.floor(dynamicCalc() * gameState.resonance);
+                } catch(e) {
+                    reward = totalRoll * 25 * gameState.resonance;
+                }
+
+                gameState.coins += reward;
+                updateUI();
+
+                document.getElementById('questLog').innerHTML = `Quest Result: Rolled [${roll1}] & [${roll2}] (Total: ${totalRoll}). <br><span class="text-emerald-400 font-bold">Bounty Won: +${reward} GC!</span>`;
+                logConsole(`[Quest] Rolled ${totalRoll}. Rewarded ${reward} GC at resonance ${gameState.resonance}x.`);
+            }, 300);
+        }
+
+        // Draw Omnibus Card
+        function drawOmnibusCard() {
+            const cardTypes = [
+                { name: "Clockwork Dragon Node", lineage: "Clockwork", icon: "🐉⚙️", power: 940, desc: "Forged from brass gears and ancient dragon scales." },
+                { name: "Obsidian Void Core", lineage: "Obsidian", icon: "🖤🔮", power: 1150, desc: "Taps into quantum void fissures and obsidian wheels." },
+                { name: "Ether Peacock Automata", lineage: "Ether", icon: "🦚✨", power: 1020, desc: "Optical plumage refracts holographic light arrays." }
+            ];
+            const drawn = cardTypes[Math.floor(Math.random() * cardTypes.length)];
+
+            const display = document.getElementById('cardDisplayArea');
+            display.innerHTML = `
+                <div class="bg-[#0b0c10] border-2 border-[#c5a059] p-4 rounded-lg relative overflow-hidden glow-box">
+                    <div class="flex justify-between items-center border-b border-[#66fcf1] pb-2 mb-3">
+                        <span class="font-cinzel text-[#66fcf1] text-sm">${drawn.name}</span>
+                        <span class="text-[10px] text-[#c5a059]">KEY #${Math.floor(Math.random()*900+100)}</span>
+                    </div>
+                    <div class="h-32 bg-gradient-to-br from-[#1f2833] to-[#0b0c10] rounded border border-[#45a29e] flex items-center justify-center relative">
+                        <span class="text-4xl">${drawn.icon}</span>
+                    </div>
+                    <div class="mt-3 text-xs text-gray-300">
+                        ${drawn.desc}
+                    </div>
+                    <div class="mt-3 flex justify-between items-center text-xs text-[#66fcf1] border-t border-gray-800 pt-2">
+                        <span>Lineage: ${drawn.lineage}</span>
+                        <span>Power: ${drawn.power} QPU</span>
+                    </div>
+                </div>
+            `;
+            logConsole(`[Omnibus] Drawn card: ${drawn.name} (${drawn.power} QPU).`);
+        }
+
+        // Forge New Card
+        function forgeNewCard() {
+            if (gameState.coins < 100) {
+                alertBox("Insufficient Gemini Coins for forging!");
+                return;
+            }
+            gameState.coins -= 100;
+            updateUI();
+
+            const automata = document.getElementById('partAutomata').value;
+            const dragon = document.getElementById('partDragon').value;
+            const token = document.getElementById('partToken').value;
+
+            const newCard = {
+                title: automata.split(' ')[0] + " " + dragon.split(' ')[0],
+                lineage: dragon.split(' ')[0] + " Lineage",
+                qpu: Math.floor(Math.random() * 500 + 1100)
+            };
+
+            gameState.forgedCards.push(newCard);
+            renderDeck();
+            logConsole(`[Forge] Successfully synthesized ${newCard.title} (${newCard.qpu} QPU).`);
+        }
+
+        function renderDeck() {
+            const inventory = document.getElementById('deckInventory');
+            inventory.innerHTML = '';
+            gameState.forgedCards.forEach(c => {
+                inventory.innerHTML += `
+                    <div class="bg-[#0b0c10] border border-[#45a29e] p-3 rounded flex justify-between items-center">
+                        <div>
+                            <div class="font-cinzel text-xs text-[#66fcf1]">${c.title}</div>
+                            <div class="text-[10px] text-gray-400">${c.lineage}</div>
+                        </div>
+                        <span class="text-xs bg-[#c5a059]/20 text-[#c5a059] px-2 py-1 rounded">QPU: ${c.qpu}</span>
+                    </div>
+                `;
+            });
+        }
+
+        // Sandbox Code Execution
+        function executeSandboxCode() {
+            logConsole("[Sandbox] Compiling and injecting rule script...");
+            try {
+                const code = document.getElementById('codeEditor').value;
+                // Test execution
+                const testResult = new Function(code + "\n return typeof calculateQuestReward === 'function';")();
+                if(testResult) {
+                    logConsole("[Success] Script compiled successfully. Quest reward engine updated.");
+                } else {
+                    logConsole("[Warning] Script executed, but calculateQuestReward function not detected.");
+                }
+            } catch(err) {
+                logConsole("[Error] Compilation error: " + err.message);
+            }
+        }
+
+        function resetCode() {
+            document.getElementById('codeEditor').value = `// Omnibus Protocol 252 Rule Engine\nfunction calculateQuestReward(diceTotal, cardPower) {\n    const baseMultiplier = 2.5;\n    const quantumResonance = 1.15;\n    let payout = (diceTotal * 15) + (cardPower * 0.1);\n    return Math.floor(payout * baseMultiplier * quantumResonance);\n}`;
+            logConsole("[Sandbox] Reset code editor to default state.");
+        }
+
+        // Economy Actions
+        function claimDailyStipend() {
+            gameState.coins += 100;
+            updateUI();
+            logConsole("[Economy] Claimed daily Gemini Coin stipend (+100 GC).");
+        }
+
+        function buyPackage(name, cost) {
+            if (gameState.coins < cost) {
+                alertBox("Not enough Gemini Coins to purchase " + name);
+                return;
+            }
+            gameState.coins -= cost;
+            updateUI();
+            logConsole("[Economy] Successfully purchased package: " + name);
+            alertBox("Successfully unlocked: " + name + "!");
+        }
+
+        function logConsole(text) {
+            const consoleBox = document.getElementById('consoleOutput');
+            consoleBox.innerHTML += `<div>${text}</div>`;
+            consoleBox.scrollTop = consoleBox.scrollHeight;
+        }
+
+        function alertBox(msg) {
+            logConsole("[Alert] " + msg);
+        }
+
+        // Periodic Stock Value Simulation (Tied to GOOGL)
+        setInterval(() => {
+            const fluctuation = (Math.random() - 0.48) * 0.50;
+            gameState.googlPrice = Math.max(10, gameState.googlPrice + fluctuation);
+            updateUI();
+        }, 5000);
+
+        // Initial setup
+        window.onload = function() {
+            updateUI();
+            renderDeck();
+        };
+    </script>
+</body>
+</html>

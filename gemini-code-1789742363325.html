@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Omnibus Card Template - Protocol 252</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Special+Elite&display=swap');
+
+        body {
+            background-color: #0b0c10;
+            color: #c5c6c7;
+            font-family: 'Special Elite', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .card-container {
+            perspective: 1000px;
+        }
+
+        .steampunk-card {
+            width: 380px;
+            height: 580px;
+            background: linear-gradient(135deg, #1f2833 0%, #0b0c10 100%);
+            border: 6px solid #c5a059;
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.4), inset 0 0 20px rgba(0,0,0,0.8);
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+
+        /* Rivets */
+        .rivet {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #e5c158 30%, #5a4519 100%);
+            border-radius: 50%;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .r-top-left { top: 8px; left: 8px; }
+        .r-top-right { top: 8px; right: 8px; }
+        .r-bot-left { bottom: 8px; left: 8px; }
+        .r-bot-right { bottom: 8px; right: 8px; }
+
+        /* Animated Cogwheels Background */
+        .cogwheel {
+            position: absolute;
+            opacity: 0.15;
+            animation: spin 20s linear infinite;
+            z-index: 0;
+        }
+        .cog-1 { width: 150px; top: -30px; left: -30px; animation-duration: 25s; }
+        .cog-2 { width: 120px; bottom: -20px; right: -20px; animation-duration: 18s; animation-direction: reverse; }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Card Content Layer */
+        .card-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .card-header {
+            text-align: center;
+            border-bottom: 2px dashed #66fcf1;
+            padding-bottom: 8px;
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: #66fcf1;
+            text-shadow: 0 0 5px rgba(102, 252, 241, 0.5);
+            margin: 0;
+        }
+
+        .card-subtitle {
+            font-size: 0.7rem;
+            color: #c5a059;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Holographic Dodecahedron & Gyroscope Engine Frame */
+        .engine-frame {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gyro-ring {
+            position: absolute;
+            border: 2px dotted #c5a059;
+            border-radius: 50%;
+            animation: spin 10s linear infinite;
+        }
+        .gyro-1 { width: 150px; height: 150px; }
+        .gyro-2 { width: 120px; height: 120px; animation-duration: 7s; animation-direction: reverse; border-color: #66fcf1; }
+
+        .quantum-dodecahedron {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, rgba(102,252,241,0.3), rgba(197,160,89,0.3));
+            clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+            animation: pulse-holo 3s ease-in-out infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 25px #66fcf1;
+        }
+
+        @keyframes pulse-holo {
+            0%, 100% { transform: scale(0.9) rotate(0deg); opacity: 0.8; filter: hue-rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 1; filter: hue-rotate(90deg); }
+        }
+
+        /* Details / Lore section */
+        .card-body {
+            font-size: 0.75rem;
+            line-height: 1.4;
+            background: rgba(11, 12, 16, 0.7);
+            border: 1px solid #45a29e;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .traits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            font-size: 0.65rem;
+            color: #66fcf1;
+            text-transform: uppercase;
+        }
+
+        .trait-badge {
+            background: rgba(102, 252, 241, 0.1);
+            border: 1px solid #66fcf1;
+            padding: 3px 6px;
+            text-align: center;
+            border-radius: 3px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            border-top: 1px solid #c5a059;
+            padding-top: 8px;
+        }
+
+        .key-icon {
+            color: #c5a059;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container" id="cardContainer">
+        <div class="steampunk-card" id="steampunkCard">
+            <!-- Rivets -->
+            <div class="rivet r-top-left"></div>
+            <div class="rivet r-top-right"></div>
+            <div class="rivet r-bot-left"></div>
+            <div class="rivet r-bot-right"></div>
+
+            <!-- Background Cogs -->
+            <svg class="cogwheel cog-1" viewBox="0 0 100 100"><path fill="#c5a059" d="M50 15a5 5 0 015-5h10a5 5 0 015 5v5.5a35 35 0 0110.6 4.4l4-4a5 5 0 017 0l7.1 7.1a5 5 0 010 7l-4 4A35 35 0 0190 45h5.5a5 5 0 015 5v10a5 5 0 01-5 5H90a35 35 0 01-4.4 10.6l4 4a5 5 0 010 7l-7.1 7.1a5 5 0 01-7 0l-4-4A35 35 0 0155 89.5V95a5 5 0 01-5 5H40a5 5 0 01-5-5v-5.5a35 35 0 01-10.6-4.4l-4 4a5 5 0 01-7 0L10.2 78a5 5 0 010-7l4-4A35 35 0 0110 55H4.5a5 5 0 01-5-5V40a5 5 0 015-5H10a35 35 0 014.4-10.6l-4-4a5 5 0 010-7l7.1-7.1a5 5 0 017 0l4 4A35 35 0 0135 20.5V15zM50 30a20 20 0 100 40 20 20 0 000-40z"/></svg>
+            <svg class="cogwheel cog-2" viewBox="0 0 100 100"><path fill="#66fcf1" d="M50 15a5 5 0 015-5h10a5 5 0 015 5v5.5a35 35 0 0110.6 4.4l4-4a5 5 0 017 0l7.1 7.1a5 5 0 010 7l-4 4A35 35 0 0190 45h5.5a5 5 0 015 5v10a5 5 0 01-5 5H90a35 35 0 01-4.4 10.6l4 4a5 5 0 010 7l-7.1 7.1a5 5 0 01-7 0l-4-4A35 35 0 0155 89.5V95a5 5 0 01-5 5H40a5 5 0 01-5-5v-5.5a35 35 0 01-10.6-4.4l-4 4a5 5 0 01-7 0L10.2 78a5 5 0 010-7l4-4A35 35 0 0110 55H4.5a5 5 0 01-5-5V40a5 5 0 015-5H10a35 35 0 014.4-10.6l-4-4a5 5 0 010-7l7.1-7.1a5 5 0 017 0l4 4A35 35 0 0135 20.5V15zM50 30a20 20 0 100 40 20 20 0 000-40z"/></svg>
+
+            <div class="card-content">
+                <!-- Header -->
+                <div class="card-header">
+                    <h2 class="card-title">Omnibus Engine Node</h2>
+                    <span class="card-subtitle">Automata & Quantum Array</span>
+                </div>
+
+                <!-- Central Engine Graphic -->
+                <div class="engine-frame">
+                    <div class="gyro-ring gyro-1"></div>
+                    <div class="gyro-ring gyro-2"></div>
+                    <div class="quantum-dodecahedron"></div>
+                </div>
+
+                <!-- Lore / Mechanics -->
+                <div class="card-body">
+                    Constructed from omnibus matrices. Merges mechanical peacock plumage optics with quad-dragon resonance cores, translating wheels and keys into infinite computational iterations.
+                </div>
+
+                <!-- Traits Grid -->
+                <div class="traits-grid">
+                    <div class="trait-badge">Peacock Automata</div>
+                    <div class="trait-badge">Ether Dragon</div>
+                    <div class="trait-badge">Clockwork Drag.</div>
+                    <div class="trait-badge">Obsidian Drag.</div>
+                    <div class="trait-badge">Zephyr Drag.</div>
+                    <div class="trait-badge">Gyroscope Array</div>
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer">
+                    <span class="key-icon">🔑 Key #409</span>
+                    <span>Cost: 7 Wheels</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Interactive JavaScript for 3D Holographic Parallax Tilt & Dynamic Cog Speed Adjustment
+        const card = document.getElementById('steampunkCard');
+        const container = document.getElementById('cardContainer');
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            // Calculate rotation angles
+            const rotateX = (-y / 15).toFixed(2);
+            const rotateY = (x / 15).toFixed(2);
+
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            card.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+        });
+
+        // Dynamic speed shifting for the quantum dodecahedron on click
+        const dodeca = document.querySelector('.quantum-dodecahedron');
+        let speedBoost = false;
+        dodeca.addEventListener('click', () => {
+            speedBoost = !speedBoost;
+            dodeca.style.animationDuration = speedBoost ? '0.8s' : '3s';
+        });
+    </script>
+</body>
+</html>
